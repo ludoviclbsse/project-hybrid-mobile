@@ -39,7 +39,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   })
 
   .state('sections', {
-    url: '/sections',
+    url: '/provider/:sectionCode',
     templateUrl: 'templates/sections.html',
     controller: 'SectionsCtrl'
   })
