@@ -1,0 +1,12 @@
+<ion-view view-title="{{currentSection}}">
+    <ion-content class="padding">
+        <ion-list>
+            <ion-item class="item-thumbnail-left item-text-wrap" ng-repeat="item in titles">
+                <img ng-src="{{item.enclosure.link && item.enclosure.link || item.enclosure.thumbnail}}" />
+                <h2 >{{item.title}}</h2>
+                <p> {{item.pubDate}}</p>
+                <p> {{item.content | limitTo: 35}}</p>
+            </ion-item>
+        </ion-list>
+    </ion-content>
+</ion-view>

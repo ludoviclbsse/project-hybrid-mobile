@@ -12,6 +12,9 @@ angular.module('starter.controllers', [])
             .finally(function () {
                 console.log("Finish ");
             });
+    })
+
+    .controller('SectionsCtrl', function ($scope, BackendAPI, $stateParams, $state) {
 
         $scope.ProvidersSections = BackendAPI.get_sections()
             .then(function (res) {
@@ -24,61 +27,32 @@ angular.module('starter.controllers', [])
             .finally(function () {
                 console.log("Finish ");
             });
-        $scope.ProviderSection = $stateParams.sectionCode;
+
+        $scope.currentProvider = $stateParams.sectionCode;
         $scope.goToSection = function (sect) {
-            $state.go('sections', {ServiceProvider: sect.provider, Sections: sect.section});
+            $state.go('news', {provider: sect.provider, section: sect.section, url: sect.url, logo: sect.logo});
         };
     })
 
-    .controller('SectionsCtrl', function ($scope, BackendAPI, $stateParams, $state) {
 
-            $scope.ProvidersSections = BackendAPI.get_sections()
+    .controller('NewsCtrl', function ($scope, BackendAPI, $stateParams, NewsFactory) {
+        $scope.currentSection = $stateParams.section;
+        $scope.loadTitles = function () {
+            NewsFactory.getNewsTitles($stateParams.url)
                 .then(function (res) {
-                    $scope.ProvidersSections = res.data;
-                    console.log(res);
+                    console.log(res.data.items);
+                    if (res.data.items) {
+                        $scope.titles = res.data.items;
+                    } else {
+                        console.log("Feed error : " + res.data);
+                    }
                 })
                 .catch(function (err) {
-                    console.log("Connection error : " + JSON.stringify(err));
+                    console.log("Connection error : ");
                 })
                 .finally(function () {
-                    console.log("Finish ");
                 });
-
-            $scope.currentSection = $stateParams.sectionCode;
-//  $scope.sections=NewsSections.all();
-            $scope.goToSection = function (sect) {
-                $state.go('sections', {provider: sect.provider, section: sect.section, url: sect.url});
-            };
-        }
-
-        /*
-        .controller('DashCtrl', function($scope) {
-
-        })*/
-
-        /*
-        .controller('ChatsCtrl', function($scope, Chats) {
-          // With the new view caching in Ionic, Controllers are only called
-          // when they are recreated or on app start, instead of every page change.
-          // To listen for when this page is active (for example, to refresh data),
-          // listen for the $ionicView.enter event:
-          //
-          //$scope.$on('$ionicView.enter', function(e) {
-          //});
-
-          $scope.chats = Chats.all();
-          console.log($scope.chats);
-          $scope.remove = function(chat) {
-            Chats.remove(chat);
-          };
-        })
-
-        .controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
-          $scope.chat = Chats.get($stateParams.chatId);
-        })
-
-        .controller('AccountCtrl', function($scope) {
-
-        })
-        */
-    );
+        };
+        $scope.loadTitles();
+    })
+;
