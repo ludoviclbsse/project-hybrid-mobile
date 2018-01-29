@@ -1,10 +1,10 @@
-<ion-view view-title="Sections">
+<ion-view view-title="{{currentSection}}">
   <ion-content class="padding">
     <ion-list >
-      <ion-item class="item-thumbnail-left" ng-repeat="item in ProvidersSections" href="#/tab/news/{{item.section}}">
+      <ion-item class="item-thumbnail-left" ng-repeat="item in ProvidersSections | filter: currentSection" href="#/tab/news/{{item.section}}">
       <!--  <img src="{{item.image}}"/> -->
         <h2>{{item.section}}</h2>
       </ion-item>
-    </ion-list> -->
+    </ion-list>
   </ion-content>
 </ion-view>
