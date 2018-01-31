@@ -1,5 +1,5 @@
 angular.module('starter.controllers', [])
-    .controller('ProvidersCtrl', function ($scope, BackendAPI, $stateParams, $state) {
+    .controller('ProvidersCtrl', function ($scope, BackendAPI) {
 
         $scope.ServiceProviders = BackendAPI.providers()
             .then(function (res) {
